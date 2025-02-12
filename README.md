@@ -4,7 +4,8 @@ This repository contains an intent-based chatbot built with Python, spaCy, and F
 
 ## Project Structure
 
-ai-chatbot/ │── data/ │ └── intents.json
+ai-chatbot/ 
+│── data/ │ └── intents.json
 │── models/
 │── src/ │ ├── chatbot.py
 │ └── preprocess.py
