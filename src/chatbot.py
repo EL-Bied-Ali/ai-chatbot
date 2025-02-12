@@ -11,7 +11,7 @@ class SimpleChatbot:
         self.nlp = spacy.load("en_core_web_sm")
         self.vectorizer = TfidfVectorizer()
         self.train_intent_vectors()
-        self.memory = []  # Stores past messages
+        self.memory = {"last_intent": None}  # Store last detected intent
 
     def load_intents(self, filename):
         """Load chatbot intents from a JSON file."""
@@ -41,20 +41,34 @@ class SimpleChatbot:
 
     def get_response(self, user_input):
         """Generate a response while considering conversation history."""
-        self.memory.append(user_input.lower())  # Store user message
-
+        user_input_lower = user_input.lower()
         best_intent = self.get_best_intent(user_input)
 
-        # Handle follow-up questions (e.g., "What else?")
-        if best_intent is None:
-            if any(word in user_input.lower() for word in ["what else", "anything else", "more"]):
-                return "I've already mentioned our main services. Is there something specific you're interested in?"
-            return "I'm not sure I understand. Can you rephrase?"
+        # Handle follow-up questions (e.g., "What else?", "And?")
+        follow_up_triggers = ["what else", "and", "more", "anything else", "other things"]
+        if any(trigger in user_input_lower for trigger in follow_up_triggers):
+            if self.memory["last_intent"]:
+                # Find an alternative response if user asks "What else?"
+                for intent in self.intents:
+                    if intent["tag"] == self.memory["last_intent"]:
+                        responses = [resp for resp in intent["responses"] if resp != self.memory["last_response"]]
+                        if responses:
+                            self.memory["last_response"] = random.choice(responses)
+                            return self.memory["last_response"]
+                        else:
+                            return "I've already mentioned the main points. Anything specific you're curious about?"
+            else:
+                return "Could you clarify what topic you're referring to?"
 
-        for intent in self.intents:
-            if intent["tag"] == best_intent:
-                return random.choice(intent["responses"])
-
+        # Default response for non-follow-up queries
+        if best_intent:
+            for intent in self.intents:
+                if intent["tag"] == best_intent:
+                    response = random.choice(intent["responses"])
+                    self.memory["last_intent"] = best_intent  # Store last intent
+                    self.memory["last_response"] = response  # Store last response
+                    return response
+        
         return "I'm not sure I understand. Can you rephrase?"
 
 if __name__ == "__main__":
