@@ -3,33 +3,16 @@
     {
       "tag": "greeting",
       "patterns": [
-        "Hello",
-        "Hi",
-        "Hey",
-        "Greetings",
-        "Whats up",
-        "How are you",
-        "How are u",
-        "How's it going?",
-        "Yo",
-        "Hi there",
-        "Sup"
+        "Hello", "Hi", "Hey", "Greetings", "Whats up", "How are you", "How are u", "How's it going?", "Yo", "Hi there", "Sup"
       ],
       "responses": [
-        "Hi there!",
-        "Hello! How can I assist you?",
-        "Hey! What's up?"
+        "Hi there!", "Hello! How can I assist you?", "Hey! What's up?"
       ]
     },
     {
       "tag": "services",
       "patterns": [
-        "Tell me about your features",
-        "What do you do?",
-        "What services do you offer?",
-        "Tell me about your work",
-        "What can you do?",
-        "What services do you provide?"
+        "Tell me about your features", "What do you do?", "What services do you offer?", "Tell me about your work", "What can you do?", "What services do you provide?"
       ],
       "responses": [
         "We offer AI consulting, chatbot development, and NLP services."
@@ -38,16 +21,10 @@
     {
       "tag": "goodbye",
       "patterns": [
-        "Bye",
-        "Goodbye",
-        "See you later",
-        "Later",
-        "Catch you later"
+        "Bye", "Goodbye", "See you later", "Later", "Catch you later"
       ],
       "responses": [
-        "Goodbye! Have a great day!",
-        "See you next time!",
-        "Bye! Take care!"
+        "Goodbye! Have a great day!", "See you next time!", "Bye! Take care!"
       ]
     }
   ]
