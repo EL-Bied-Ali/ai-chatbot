@@ -5,48 +5,49 @@ from src.chatbot import SimpleChatbot
 bot = SimpleChatbot("data/intents.json")
 
 # Custom styling for chat bubbles
-st.markdown(
-    """
-    <style>
-    .chat-container {
-        max-width: 700px;
-        margin: auto;
-    }
-    .user-bubble {
-        background-color: #DCF8C6;
-        padding: 10px;
-        border-radius: 10px;
-        max-width: 80%;
-        margin-bottom: 5px;
-        text-align: left;
-    }
-    .bot-bubble {
-        background-color: #EAEAEA;
-        padding: 10px;
-        border-radius: 10px;
-        max-width: 80%;
-        margin-bottom: 5px;
-        text-align: left;
-    }
-    .message {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-    .avatar {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+css_code = """
+<style>
+.chat-container {
+    max-width: 700px;
+    margin: auto;
+}
+.user-bubble {
+    background-color: #DCF8C6;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    margin-bottom: 5px;
+    text-align: left;
+    display: inline-block;
+}
+.bot-bubble {
+    background-color: #EAEAEA;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    margin-bottom: 5px;
+    text-align: left;
+    display: inline-block;
+}
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+</style>
+"""
+
+# Inject CSS at the top
+st.markdown(css_code, unsafe_allow_html=True)
 
 # Title
-st.title("💬 AI Chatbot - Now with Better UI!")
-st.write("A simple AI-powered chatbot with a modern UI.")
+st.title("💬 AI Chatbot - Now with Proper UI!")
 
 # Chat history
 if "messages" not in st.session_state:
