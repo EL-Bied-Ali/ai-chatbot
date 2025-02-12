@@ -45,7 +45,7 @@ st.markdown(
 )
 
 # Title
-st.title("💬 AI Chatbot")
+st.title("💬 AI Chatbot - Now with Better UI!")
 st.write("A simple AI-powered chatbot with a modern UI.")
 
 # Chat history
