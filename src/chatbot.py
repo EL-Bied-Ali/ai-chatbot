@@ -61,15 +61,15 @@ class SimpleChatbot:
                 return "Could you clarify what topic you're referring to?"
 
         # Default response for non-follow-up queries
-        if best_intent:
-            for intent in self.intents:
-                if intent["tag"] == best_intent:
-                    response = random.choice(intent["responses"])
-                    self.memory["last_intent"] = best_intent  # Store last intent
-                    self.memory["last_response"] = response  # Store last response
-                    return response
-        
-        return "I'm not sure I understand. Can you rephrase?"
+        def get_best_intent(self, user_input):
+            """Find the most similar intent to the user input using cosine similarity."""
+            user_vector = self.vectorizer.transform([user_input])
+            similarity_scores = cosine_similarity(user_vector, self.tfidf_matrix)
+            best_match_idx = np.argmax(similarity_scores)
+            
+            # Lowered threshold to 0.25 for informal phrases
+            return self.intent_tags[best_match_idx] if similarity_scores[0][best_match_idx] > 0.25 else None
+
 
 if __name__ == "__main__":
     bot = SimpleChatbot("data/intents.json")
