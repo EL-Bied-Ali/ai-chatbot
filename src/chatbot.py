@@ -40,10 +40,14 @@ class SimpleChatbot:
     def get_response(self, user_input):
         """Generate a response with context awareness."""
         user_input_lower = user_input.lower().strip()
-        best_intent = self.get_best_intent(user_input)
 
-        # Check for follow-up triggers
-        follow_up_triggers = ["what else", "and", "more", "anything else", "other things"]
+        # Define a list of follow-up triggers (including additional ones)
+        follow_up_triggers = [
+            "what else", "and", "more", "anything else", 
+            "other things", "what's next", "and then"
+        ]
+        
+        # Check if the user's input is a follow-up
         if any(trigger in user_input_lower for trigger in follow_up_triggers):
             if self.memory["last_intent"]:
                 # For follow-ups, try to provide a different response for the last intent.
@@ -55,9 +59,22 @@ class SimpleChatbot:
                             self.memory["last_response"] = chosen
                             return chosen
                         else:
-                            return "I've already mentioned the main points. Anything specific you're curious about?"
+                            return "I've already mentioned the main points. Can you clarify what you'd like to know more about?"
             else:
-                return "Could you clarify what topic you're referring to?"
+                return "Could you please clarify what you mean?"
+        
+        # For non-follow-up queries, attempt to detect the best intent.
+        best_intent = self.get_best_intent(user_input)
+        if best_intent:
+            for intent in self.intents:
+                if intent["tag"] == best_intent:
+                    chosen = random.choice(intent["responses"])
+                    self.memory["last_intent"] = best_intent
+                    self.memory["last_response"] = chosen
+                    return chosen
+
+        return "I'm not sure I understand. Can you rephrase?"
+
 
         # For non-follow-up queries
         if best_intent:
