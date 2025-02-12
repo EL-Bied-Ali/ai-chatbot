@@ -41,29 +41,36 @@ class SimpleChatbot:
         """Generate a response with context awareness."""
         user_input_lower = user_input.lower().strip()
 
-        # Define a list of follow-up triggers (including additional ones)
+        # Define follow-up triggers including additional phrases
         follow_up_triggers = [
             "what else", "and", "more", "anything else", 
             "other things", "what's next", "and then"
         ]
         
-        # Check if the user's input is a follow-up
+        # Check if the user's input is a follow-up query
         if any(trigger in user_input_lower for trigger in follow_up_triggers):
             if self.memory["last_intent"]:
-                # For follow-ups, try to provide a different response for the last intent.
+                # Look for an alternative response for the last intent
                 for intent in self.intents:
                     if intent["tag"] == self.memory["last_intent"]:
+                        # Exclude the response that was already given
                         responses = [resp for resp in intent["responses"] if resp != self.memory["last_response"]]
-                        if responses:
+                        # If no alternative is available, provide a default clarification message
+                        if not responses:
+                            # Customize this message as needed; here we assume the 'services' intent
+                            if self.memory["last_intent"] == "services":
+                                return ("Our core services include AI consulting, chatbot development, and NLP services. "
+                                        "Could you please let me know if you're interested in a particular area?")
+                            else:
+                                return "I've already mentioned the main points. Could you please clarify what additional details you're looking for?"
+                        else:
                             chosen = random.choice(responses)
                             self.memory["last_response"] = chosen
                             return chosen
-                        else:
-                            return "I've already mentioned the main points. Can you clarify what you'd like to know more about?"
             else:
                 return "Could you please clarify what you mean?"
         
-        # For non-follow-up queries, attempt to detect the best intent.
+        # For non-follow-up queries, detect the best intent normally
         best_intent = self.get_best_intent(user_input)
         if best_intent:
             for intent in self.intents:
@@ -74,6 +81,7 @@ class SimpleChatbot:
                     return chosen
 
         return "I'm not sure I understand. Can you rephrase?"
+
 
 
         # For non-follow-up queries
