@@ -11,6 +11,11 @@ st.write("A simple AI-powered chatbot with a built-in chat UI. Press Enter to se
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Add a Clear Chat History button
+if st.button("Clear Chat History"):
+    st.session_state.messages = []
+    st.rerun()
+
 # Display chat history using Streamlit's built-in chat UI
 for message in st.session_state.messages:
     if message["role"] == "user":
