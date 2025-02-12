@@ -9,8 +9,9 @@ class SimpleChatbot:
     def __init__(self, intents_file):
         self.intents = self.load_intents(intents_file)
         self.nlp = spacy.load("en_core_web_sm")
-        self.vectorizer = TfidfVectorizer()  # TF-IDF model
+        self.vectorizer = TfidfVectorizer()
         self.train_intent_vectors()
+        self.memory = []  # Stores past messages
 
     def load_intents(self, filename):
         """Load chatbot intents from a JSON file."""
@@ -36,17 +37,24 @@ class SimpleChatbot:
         similarity_scores = cosine_similarity(user_vector, self.tfidf_matrix)
         best_match_idx = np.argmax(similarity_scores)
 
-        return self.intent_tags[best_match_idx] if similarity_scores[0][best_match_idx] > 0.3 else None  # Threshold
+        return self.intent_tags[best_match_idx] if similarity_scores[0][best_match_idx] > 0.3 else None
 
     def get_response(self, user_input):
-        """Get the best chatbot response based on intent similarity."""
+        """Generate a response while considering conversation history."""
+        self.memory.append(user_input.lower())  # Store user message
+
         best_intent = self.get_best_intent(user_input)
 
-        if best_intent:
-            for intent in self.intents:
-                if intent["tag"] == best_intent:
-                    return random.choice(intent["responses"])
-        
+        # Handle follow-up questions (e.g., "What else?")
+        if best_intent is None:
+            if any(word in user_input.lower() for word in ["what else", "anything else", "more"]):
+                return "I've already mentioned our main services. Is there something specific you're interested in?"
+            return "I'm not sure I understand. Can you rephrase?"
+
+        for intent in self.intents:
+            if intent["tag"] == best_intent:
+                return random.choice(intent["responses"])
+
         return "I'm not sure I understand. Can you rephrase?"
 
 if __name__ == "__main__":
