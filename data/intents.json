@@ -10,21 +10,20 @@
       ]
     },
     {
-	{
-	  "tag": "services",
-	  "patterns": [
-		"Tell me about your features",
-		"What do you do?",
-		"What services do you offer?",
-		"Tell me about your work",
-		"What can you do?",
-		"What services do you provide?"
-	  ],
-	  "responses": [
-		"We offer AI consulting, chatbot development, and NLP services.",
-		"In addition to our core services, we help integrate AI solutions into existing systems.",
-		"We also provide data analytics and machine learning model deployment services."
-	  ]
+      "tag": "services",
+      "patterns": [
+        "Tell me about your features",
+        "What do you do?",
+        "What services do you offer?",
+        "Tell me about your work",
+        "What can you do?",
+        "What services do you provide?"
+      ],
+      "responses": [
+        "We offer AI consulting, chatbot development, and NLP services.",
+        "In addition to our core services, we help integrate AI solutions into existing systems.",
+        "We also provide data analytics and machine learning model deployment services."
+      ]
     },
     {
       "tag": "goodbye",
