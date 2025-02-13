@@ -4,7 +4,7 @@ from src.chatbot import SimpleChatbot
 # Initialize chatbot
 bot = SimpleChatbot("data/intents.json")
 
-st.title("💬 AI Chatbot - Enhanced")
+st.title("💬 AI Chatbot ")
 st.write("A simple AI-powered chatbot with a built-in chat UI. Press Enter to send your message!")
 
 # Add disclaimer
