@@ -1,21 +1,29 @@
-import os
 import streamlit as st
-from llama_cpp import Llama
+import openai
 
-MODEL_PATH = "models/mistral/mistral-7b-instruct-v0.1.Q4_K_M.gguf"
+# Load API key securely from Streamlit Secrets
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-# Check if the model exists, if not, download it
-if not os.path.exists(MODEL_PATH):
-    st.info("Downloading model, please wait...")
-    os.makedirs("models/mistral", exist_ok=True)
-    os.system(f"wget -O {MODEL_PATH} https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF/resolve/main/mistral-7b-instruct-v0.1.Q4_K_M.gguf")
+# Streamlit UI
+st.title("🚀 AI Chatbot - Powered by GPT-3.5 Turbo")
 
-# Load model
-llm = Llama(model_path=MODEL_PATH, n_ctx=2048)
+st.write("Ask me anything, and I'll do my best to assist you!")
 
-st.title("AI Chatbot - Powered by Mistral 7B")
+# User input
 user_input = st.text_input("You:", "")
 
 if user_input:
-    response = llm(user_input)["choices"][0]["text"]
-    st.write(f"**Bot:** {response}")
+    try:
+        # Generate response from GPT-3.5 Turbo
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "system", "content": "You are a helpful AI assistant."},
+                      {"role": "user", "content": user_input}]
+        )
+
+        # Display response
+        bot_reply = response["choices"][0]["message"]["content"]
+        st.write(f"**Bot:** {bot_reply}")
+
+    except Exception as e:
+        st.error(f"Error: {e}")
