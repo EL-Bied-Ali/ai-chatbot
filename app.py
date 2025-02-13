@@ -1,27 +1,21 @@
+import os
 import streamlit as st
-from src.chatbot import SimpleChatbot
+from llama_cpp import Llama
 
-# Initialize chatbot
-bot = SimpleChatbot()
+MODEL_PATH = "models/mistral/mistral-7b-instruct-v0.1.Q4_K_M.gguf"
 
-st.title("💬 AI Chatbot - Demo")
-st.write("A simple AI-powered chatbot demo. Type your message and press Enter!")
+# Check if the model exists, if not, download it
+if not os.path.exists(MODEL_PATH):
+    st.info("Downloading model, please wait...")
+    os.makedirs("models/mistral", exist_ok=True)
+    os.system(f"wget -O {MODEL_PATH} https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF/resolve/main/mistral-7b-instruct-v0.1.Q4_K_M.gguf")
 
-# Initialize chat history in session state
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+# Load model
+llm = Llama(model_path=MODEL_PATH, n_ctx=2048)
 
-# Display chat history
-for message in st.session_state.messages:
-    if message["role"] == "user":
-        st.write(f"**You:** {message['content']}")
-    else:
-        st.write(f"**Chatbot:** {message['content']}")
+st.title("AI Chatbot - Powered by Mistral 7B")
+user_input = st.text_input("You:", "")
 
-# Chat input form
-user_input = st.text_input("Your message:")
 if user_input:
-    response = bot.get_response(user_input)
-    st.session_state.messages.append({"role": "user", "content": user_input})
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    st.experimental_rerun()
+    response = llm(user_input)["choices"][0]["text"]
+    st.write(f"**Bot:** {response}")
