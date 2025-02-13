@@ -100,18 +100,4 @@ If you have any questions, want to collaborate, or need a chatbot for your proje
 
 - Email: ali.el.bied9898@gmail.com  
 - GitHub: [EL-Bied-Ali](https://github.com/EL-Bied-Ali)  
-- Upwork Profile (if applicable): [Your Upwork Link]
-
-## Final Steps
-
-1. Copy and paste this README into `README.md` in your project folder.
-2. Commit and push the updated README:
-```sh
-git add README.md
-git commit -m "Added complete project README"
-git push origin main
-```
-3. Ensure all links are correct, including:
-   - **GitHub repo:** [https://github.com/EL-Bied-Ali/ai-chatbot](https://github.com/EL-Bied-Ali/ai-chatbot)
-   - **Live chatbot app:** [https://el-bied-ali-ai-chatbot.streamlit.app/](https://el-bied-ali-ai-chatbot.streamlit.app/)
-   - **Your Upwork profile (if applicable)**
+- Upwork Profile [Link](https://www.upwork.com/freelancers/~01e7d0b4cdee8ff16f)
