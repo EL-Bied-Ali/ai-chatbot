@@ -1,14 +1,18 @@
-from transformers import pipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
 
 class SimpleChatbot:
     def __init__(self):
-        # Load a pre-trained conversational model
-        self.chatbot = pipeline("conversational", model="facebook/blenderbot-400M-distill")
+        # Load Mistral's "Le Chat" model and tokenizer
+        self.tokenizer = AutoTokenizer.from_pretrained("mistralai/le-chat")
+        self.model = AutoModelForCausalLM.from_pretrained("mistralai/le-chat")
 
     def get_response(self, user_input):
-        """Generate a response using a conversational AI model."""
-        conversation = self.chatbot(user_input)
-        return conversation[0]["generated_text"]
+        """Generate a response using the AI model."""
+        inputs = self.tokenizer.encode(user_input + self.tokenizer.eos_token, return_tensors="pt")
+        outputs = self.model.generate(inputs, max_length=100, pad_token_id=self.tokenizer.eos_token_id)
+        response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return response
 
 # Example usage
 if __name__ == "__main__":
