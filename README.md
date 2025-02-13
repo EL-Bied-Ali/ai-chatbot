@@ -81,14 +81,20 @@ Once the server starts, open your browser and go to `http://localhost:8501/`.
 4. The chatbot maintains memory of past interactions to improve follow-up responses.
 5. The Streamlit UI displays the conversation dynamically, allowing for real-time interactions.
 
-## Future Enhancements
+## Limitations & Future Enhancements
 
-This chatbot is designed as a proof-of-concept, but future improvements could include:
+This chatbot is a **simple proof-of-concept** using rule-based intent matching. It does **not** use deep learning, ChatGPT, or transformer models. However, I have experience with:
+- **ChatGPT API & Hugging Face** for more human-like responses.
+- **Machine learning-based intent classification** instead of TF-IDF.
+- **Integration with databases & APIs** to handle dynamic data.
 
-- Integration with Hugging Face models for more advanced NLP capabilities
-- Advanced context awareness to maintain long-term memory across interactions
-- An analytics dashboard to track chatbot usage and user queries
-- API integration for real-world applications such as customer support
+Future improvements could include:
+- **ChatGPT or Llama API integration** for more conversational responses.
+- **Fine-tuning a transformer model** for custom chatbot solutions.
+- **Multi-turn memory handling** for improved conversation flow.
+
+If you're interested in a **custom AI chatbot**, feel free to reach out.
+
 
 ## License
 

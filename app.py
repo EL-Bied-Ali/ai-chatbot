@@ -7,6 +7,14 @@ bot = SimpleChatbot("data/intents.json")
 st.title("💬 AI Chatbot - Enhanced")
 st.write("A simple AI-powered chatbot with a built-in chat UI. Press Enter to send your message!")
 
+# Add disclaimer
+st.info(
+    "🔹 This is a **basic rule-based chatbot** using TF-IDF for intent matching. "
+    "It does NOT use ChatGPT, machine learning, or deep learning models. "
+    "However, I have experience with AI-powered chatbot development, "
+    "including ChatGPT API integration, fine-tuned models, and real-time AI responses."
+)
+
 # Initialize chat history in session state if not already present
 if "messages" not in st.session_state:
     st.session_state.messages = []
